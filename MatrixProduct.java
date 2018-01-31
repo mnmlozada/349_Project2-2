@@ -42,12 +42,40 @@ public class MatrixProduct
 
 	}
 
-	public static int[][] matrixProduct_Strassen(int[][] A, int rowA, int colA, int[][] B, int rowB, int colB)
+	public static int[][] matrixProduct_Strassen(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
+	{
+		// checks to see if matrix is square and power of two
+		checkMatrix(A, B);
+
+		int[][] C = new int[n][n];
+
+		if n == 1
+		{
+			C[0][0] = A[]
+		}
+		else
+		{
+			int[][] s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
+
+			
+
+		}
+
+	}
+
+	private static int[][] matrixProduct_Strassen(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
 	{
 
 	}
 
-	private static int[][] matrixProduct_Strassen(int[][] A, int rowA, int colA, int[][] B, int rowB, int colB)
+	// A + B
+	private static int[][] matrixAdd(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
+	{
+
+	}
+
+	// A - B
+	private static int[][] matrixDiff(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
 	{
 
 	}
