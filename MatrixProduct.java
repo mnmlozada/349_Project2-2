@@ -42,13 +42,18 @@ public class MatrixProduct
 
 	}
 
-	public static int[][] matrixProduct_Strassen(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
+	public static int[][] matrixProduct_Strassen(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		// checks to see if matrix is square and power of two
 		checkMatrix(A, B);
 
-		int[][] C = new int[n][n];
+		matrixProduct_Strassen(A, 0, 0, B, 0, 0, A.length);
 
+	}
+
+	private static int[][] matrixProduct_Strassen(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
+	{
+		int[][] C = new int[n][n];
 		if n == 1
 		{
 			C[0][0] = A[]
@@ -56,28 +61,45 @@ public class MatrixProduct
 		else
 		{
 			int[][] s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
+			s1 = matrixDiff(B, startrowB, startcolB + n / 2, B, startrowB + n / 2, startcolB + n / 2); // s1 = b12 - b22
+			s2 = matrixAdd(A, startrowA, startcolA, A, startrowA, startcolA + n / 2); // s2 = a11 + a12
+			s3 = matrixAdd(A, startrowA + n / 2, startcolA, A, startrowA + n / 2, startcolA + n / 2); // s3 = a21 + a22
+			s4 = matrixDiff(B, startrowB + n / 2, startcolB, B, startrowB, startcolB); // s4 = b21 - b11
+			s5 = matrixAdd(A, startrowA, startcolA, A, startrowA + n / 2, startcolA + n / 2); // s5 = a11 + a22
+			s6 = 
 
-			
 
 		}
-
-	}
-
-	private static int[][] matrixProduct_Strassen(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
-	{
-
 	}
 
 	// A + B
 	private static int[][] matrixAdd(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
 	{
+		int[][] C = new int[n][n];
 
+		for(int i = 0; i < n; i++)
+		{
+			for(int j = 0; i < n; j++)
+			{
+				C[i][j] = A[startrowA + i][startcolA + j] + B[startrowB + i][startcolB + j];
+			}
+		}
+		return C;
 	}
 
 	// A - B
 	private static int[][] matrixDiff(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
 	{
+		int[][] C = new int[n][n];
 
+		for(int i = 0; i < n; i++)
+		{
+			for(int j = 0; i < n; j++)
+			{
+				C[i][j] = A[startrowA + i][startcolA + j] - B[startrowB + i][startcolB + j];
+			}
+		}
+		return C;
 	}
 
 }
