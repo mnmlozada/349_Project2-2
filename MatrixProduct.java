@@ -3,7 +3,7 @@ import java.io.*;
 
 public class MatrixProduct
 {
-	
+
 	private static void checkMatrix(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		int aRow = A.length;
@@ -39,13 +39,13 @@ public class MatrixProduct
 		int[][] C = new int[100][100];
         matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
 	}
-	
+
 	private static void matrixProduct_DAC(int row1, int col1, int A[][], int row2, int col2, int B[][], int C[][])
-    {
+  {
         // If all rows traversed
         if (i >= row1)
             return;
-  
+
         // If i < row1
         if (j < col2)
         {
@@ -53,15 +53,15 @@ public class MatrixProduct
             {
                 C[i][j] += A[i][k] * B[k][j];
                 k++;
-  
+
                 matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
             }
-  
+
             k = 0;
             j++;
             matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
         }
-  
+
         j = 0;
         i++;
         matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
@@ -86,16 +86,25 @@ public class MatrixProduct
 		else
 		{
 			int[][] s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
-			s1  = matrixDiff(B, startrowB, startcolB + n / 2, B, startrowB + n / 2, startcolB + n / 2); // s1 = b12 - b22
-			s2  = matrixAdd(A, startrowA, startcolA, A, startrowA, startcolA + n / 2);                  // s2 = a11 + a12
-			s3  = matrixAdd(A, startrowA + n / 2, startcolA, A, startrowA + n / 2, startcolA + n / 2);  // s3 = a21 + a22
-			s4  = matrixDiff(B, startrowB + n / 2, startcolB, B, startrowB, startcolB);                 // s4 = b21 - b11
-			s5  = matrixAdd(A, startrowA, startcolA, A, startrowA + n / 2, startcolA + n / 2);          // s5 = a11 + a22
-			s6  = matrixAdd(B, startrowB, startcolB, B, startrowB + n / 2, startcolB + n / 2);          // s6 = b11 + b22
-			s7  = matrixDiff(A, startrowA, startcolA + n / 2, A, startrowA + n / 2, startcolA + n / 2); // s7 = a12 - a22
-			s8  = matrixAdd(B, startrowB + n / 2, startcolB, B, startrowB + n / 2, startcolB + n / 2);  // s8 = b21 + b22
-			s9  = matrixDiff(A, startrowA, startcolA, A, startrowA + n / 2, startcolA);                 // s9 = a11 - a21
-			s10 = matrixAdd(B, startrowB, startcolB, B, startrowB, startcolB + n / 2);                  // s10 = b11 + b12
+			s1  = matrixDiff(B, startrowB, startcolB + n / 2, B, startrowB + n / 2, startcolB + n / 2, n / 2); // s1 = b12 - b22
+			s2  = matrixAdd(A, startrowA, startcolA, A, startrowA, startcolA + n / 2, n / 2);                  // s2 = a11 + a12
+			s3  = matrixAdd(A, startrowA + n / 2, startcolA, A, startrowA + n / 2, startcolA + n / 2, n / 2);  // s3 = a21 + a22
+			s4  = matrixDiff(B, startrowB + n / 2, startcolB, B, startrowB, startcolB, n / 2);                 // s4 = b21 - b11
+			s5  = matrixAdd(A, startrowA, startcolA, A, startrowA + n / 2, startcolA + n / 2, n / 2);          // s5 = a11 + a22
+			s6  = matrixAdd(B, startrowB, startcolB, B, startrowB + n / 2, startcolB + n / 2, n / 2);          // s6 = b11 + b22
+			s7  = matrixDiff(A, startrowA, startcolA + n / 2, A, startrowA + n / 2, startcolA + n / 2, n / 2); // s7 = a12 - a22
+			s8  = matrixAdd(B, startrowB + n / 2, startcolB, B, startrowB + n / 2, startcolB + n / 2, n / 2);  // s8 = b21 + b22
+			s9  = matrixDiff(A, startrowA, startcolA, A, startrowA + n / 2, startcolA, n / 2);                 // s9 = a11 - a21
+			s10 = matrixAdd(B, startrowB, startcolB, B, startrowB, startcolB + n / 2, n / 2);                  // s10 = b11 + b12
+
+			int[][] p1, p2, p3, p4, p5, p6, p7;
+			p1 = matrixProduct_Strassen(A, startrowA, startcolA, s1, 0, 0, n / 2);                  // p1 = a11 * s1
+			p2 = matrixProduct_Strassen(s2, 0, 0, B, startrowB + n / 2, startcolB + n / 2, n / 2);  // p2 = s2 * b22
+			p3 = matrixProduct_Strassen(s3, 0, 0, B, startrowB, startcolB, n / 2);                  // p3 = s3 * b11
+			p4 = matrixProduct_Strassen(A, startrowA + n / 2, startcolA + n / 2, s4, 0, 0, n / 2);  // p4 = a22 * s4
+			p5 = matrixProduct_Strassen(s5, 0, 0, s6, 0, 0, n / 2);                                 // p5 = s5 * s6
+			p6 = matrixProduct_Strassen(s7, 0, 0, s8, 0, 0, n / 2);                                 // p6 = s7 * s8
+			p7 = matrixProduct_Strassen(s9, 0, 0, s10, 0, 0, n / 2);                                // p7 = s9 * s10
 
 
 		}
