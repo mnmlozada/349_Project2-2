@@ -106,8 +106,57 @@ public class MatrixProduct
 			p6 = matrixProduct_Strassen(s7, 0, 0, s8, 0, 0, n / 2);                                 // p6 = s7 * s8
 			p7 = matrixProduct_Strassen(s9, 0, 0, s10, 0, 0, n / 2);                                // p7 = s9 * s10
 
+			// Computing C quadrants
+			int[][] c11, c12, c21, c22;
+			c11 = matrixDiff( matrixAdd(p5, 0, 0, p4, 0, 0, n / 2), 0, 0, matrixAdd(p2, 0, 0, p6, 0, 0, n / 2), 0, 0, n / 2 );
+			c12 = matrixAdd(p1, 0, 0, p2, 0, 0, n / 2);
+			c21 = matrixAdd(p3, 0, 0, p4, 0, 0, n / 2);
+			c22 = matrixDiff( matrixAdd(p5, 0, 0, p1, 0, 0, n / 2), 0, 0, matrixDiff(p3, 0, 0, p7, 0, 0, n / 2), 0, 0, n / 2 );
 
+			fillMatrix(C, c11, c12, c21, c22, n);
 		}
+
+		return C;
+	}
+
+	private static void fillMatrix(int[][] C, int[][] c11, int[][] c12, int[][] c21, int[][] c22, int n)
+	{
+		// filling in c11
+		for(int i = 0; i < n / 2; i++)
+		{
+			for(int j = 0; j < n / 2; j++)
+			{
+				C[i][j] = c11[i][j];
+			}
+		}
+
+		// filling in c12
+		for(int i = n / 2; i < n; i++)
+		{
+			for(int j = 0; j < n / 2; j++)
+			{
+				C[i][j] = c12[i][j];
+			}
+		}
+
+		// filling in c21
+		for(int i = 0; i < n / 2; i++)
+		{
+			for(int j = n / 2; j < n; j++)
+			{
+				C[i][j] = c21[i][j];
+			}
+		}
+
+		// filling in c22
+		for(int i = n / 2; i < n; i++)
+		{
+			for(int j = n / 2; j < n; j++)
+			{
+				C[i][j] = c22[i][j];
+			}
+		}
+
 	}
 
 	// A + B
