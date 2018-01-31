@@ -3,8 +3,8 @@ import java.io.*;
 
 public class MatrixProduct
 {
-
-	public static void checkMatrix(int[][] A, int[][] B) throws IllegalArgumentException
+	
+	private static void checkMatrix(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		int aRow = A.length;
 		int aCol = A[0].length;
@@ -34,13 +34,38 @@ public class MatrixProduct
 
 	public static int[][] matrixProduct_DAC(int[][] A, int[][] B)
 	{
-
+		checkMatrix(A, B);
+		// get row/col lengths
+		int[][] C = new int[100][100];
+        matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
 	}
-
-	private static int[][] matrixProduct_DAC()
-	{
-
-	}
+	
+	private static void matrixProduct_DAC(int row1, int col1, int A[][], int row2, int col2, int B[][], int C[][])
+    {
+        // If all rows traversed
+        if (i >= row1)
+            return;
+  
+        // If i < row1
+        if (j < col2)
+        {
+            if (k < col1)
+            {
+                C[i][j] += A[i][k] * B[k][j];
+                k++;
+  
+                matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
+            }
+  
+            k = 0;
+            j++;
+            matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
+        }
+  
+        j = 0;
+        i++;
+        matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
+    }
 
 	public static int[][] matrixProduct_Strassen(int[][] A, int[][] B) throws IllegalArgumentException
 	{
