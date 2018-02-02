@@ -40,30 +40,17 @@ public class MatrixProduct
 		return C;
 	}
 
-<<<<<<< HEAD
+
 	private static int[][] matrixProduct_DAC(int aRow, int aCol, int A[][], int bRow, int bCol, int B[][], int size)
   {
-=======
+
 	// C11 - C22 need 2 recursive calls, then the 2 matrices resulting from the recursive calls need to be added
 	private static int[][] matrixProduct_DAC(int A[][], int startrowA, int startcolA, int B[][], int startrowB, int startcolB, int size)
 	{
->>>>>>> 554721c280d527be754490eec42e7f3f0a1f6df8
+
         int[][] C = new int[size][size];
 		
-<<<<<<< HEAD
-//		if(size == 1)
-//		{
-//			C = A[aRow, aCol] * B[bRow][bCol];
-//		}
-//		else
-//		{
-//
-//		}
-		
-		return C;
-    }
 
-=======
 		if(size == 1)
 		{
 			C[0][0] = A[startrowA][startcolA] * B[startrowB][startcolB];
@@ -109,7 +96,7 @@ public class MatrixProduct
 
 	}
 
->>>>>>> 554721c280d527be754490eec42e7f3f0a1f6df8
+
 	public static int[][] matrixProduct_Strassen(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		// checks to see if matrix is square and power of two
