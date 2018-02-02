@@ -52,10 +52,19 @@ public class TestMatrix
 		
 		
 		//case 1
-		J = test.matrixProduct_DAC(A, B);
-		System.out.println("Should throw exception");
-		J = test.matrixProduct_Strassen(A, B);
-		System.out.println("Should throw exception");
+
+		try
+		{
+			J = test.matrixProduct_DAC(A, B);
+			System.out.println("Should throw exception");
+			J = test.matrixProduct_Strassen(A, B);
+			System.out.println("Should throw exception");
+		}
+		catch(IllegalArgumentException e)
+		{
+			System.out.println("Caught");
+		}
+
 		
 		
 		//case 2
