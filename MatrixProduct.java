@@ -1,3 +1,12 @@
+/* 
+* CS 349
+* Project 2, Part 2
+*
+* @authors: Griffin Johnson & Michael Lozada
+* @id: mlozada & gpjohnso
+* @date: February 2, 2018
+*/
+
 import java.util.*;
 import java.io.*;
 
