@@ -3,15 +3,13 @@ import java.io.*;
 
 public class MatrixProduct
 {
-
-	int aRow, aCol, bRow, bCol;
 	
 	private static void checkMatrix(int[][] A, int[][] B) throws IllegalArgumentException
 	{
-		aRow = A.length;
-		aCol = A[0].length;
-		bRow = B.length;
-		bCol = B[0].length;
+		int aRow = A.length;
+		int aCol = A[0].length;
+		int bRow = B.length;
+		int bCol = B[0].length;
 
 		//checks that each matrix is a square and that they equal each other
 		if(aRow != aCol && bRow != bCol && aCol != bRow)
@@ -34,38 +32,28 @@ public class MatrixProduct
 		return (x != 0) && ((x & (x - 1)) == 0);
 	}
 
-	public static int[][] matrixProduct_DAC(int[][] A, int[][] B)
+	public static int[][] matrixProduct_DAC(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		checkMatrix(A, B);
-		int[][] C = new int[100][100];
-        matrixProduct_DAC(aRow, aCol, A, bRow, bCol, B, C);
+        matrixProduct_DAC(0, 0, A, 0, 0, B, A.length);
+		
+		return C;
 	}
 
-	private static void matrixProduct_DAC(int aRow, int aCol, int A[][], int bRow, int bCol, int B[][], int C[][])
+	private static void matrixProduct_DAC(int aRow, int aCol, int A[][], int bRow, int bCol, int B[][], int size)
   {
-        // If all rows traversed
-        if (i >= aRow)
-            return;
-
-        // If i < aRow
-        if (j < bCol)
-        {
-            if (k < aCol)
-            {
-                C[i][j] += A[i][k] * B[k][j];
-                k++;
-
-                matrixProduct_DAC(aRow, aCol, A, bRow, bCol, B, C);
-            }
-
-            k = 0;
-            j++;
-            matrixProduct_DAC(aRow, aCol, A, bRow, bCol, B, C);
-        }
-
-        j = 0;
-        i++;
-        matrixProduct_DAC(aRow, aCol, A, bRow, bCol, B, C);
+        int[][] C = new int[size][size];
+		
+		if(size == 1)
+		{
+			C = A[aRow, aCol] * B[bRow][bCol];
+		}
+		else
+		{
+			
+		}
+		
+		return C;
     }
 
 	public static int[][] matrixProduct_Strassen(int[][] A, int[][] B) throws IllegalArgumentException
