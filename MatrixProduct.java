@@ -40,10 +40,17 @@ public class MatrixProduct
 		return C;
 	}
 
+<<<<<<< HEAD
 	private static int[][] matrixProduct_DAC(int aRow, int aCol, int A[][], int bRow, int bCol, int B[][], int size)
   {
+=======
+	// C11 - C22 need 2 recursive calls, then the 2 matrices resulting from the recursive calls need to be added
+	private static int[][] matrixProduct_DAC(int A[][], int startrowA, int startcolA, int B[][], int startrowB, int startcolB, int size)
+	{
+>>>>>>> 554721c280d527be754490eec42e7f3f0a1f6df8
         int[][] C = new int[size][size];
 		
+<<<<<<< HEAD
 //		if(size == 1)
 //		{
 //			C = A[aRow, aCol] * B[bRow][bCol];
@@ -56,6 +63,53 @@ public class MatrixProduct
 		return C;
     }
 
+=======
+		if(size == 1)
+		{
+			C[0][0] = A[startrowA][startcolA] * B[startrowB][startcolB];
+		}
+		else{
+
+			int offset = size/2;
+			
+			//C11
+			temp1 = matrixProduct_DAC(A, startrowA, startcolA, B, startrowB, startcolB, offset);
+			temp2 = matrixProduct_DAC(A, startrowA, startcolA + offset, B, startrowB + offset, startcolB, offset);
+			sumMatrix(C, temp1, temp2, 0, 0);
+
+			//C12
+			temp1 = matrixProduct_DAC(A, startrowA, startcolA, B, startrowB, startcolB + offset, offset);
+			temp2 = matrixProduct_DAC(A, startrowA, startcolA+offset, B, startrowB + offset, startcolB+offset, offset);
+			sumMatrix(C, temp1, temp2, 0, offset);
+
+			 
+			//C21
+			temp1 = matrixProduct_DAC(A, startrowA + offset, startcolA, B, startrowB, startcolB, offset);
+			temp2 = matrixProduct_DAC(A, startrowA + offset, startcolA + offset, B, startrowB+ offset, startcolB, offset);
+			sumMatrix(C, temp1, temp2, offset, 0);
+
+			//C22
+			temp1 = matrixProduct_DAC(A, startrowA + offset, startcolA, B, startrowB, startcolB +offset, offset);
+			temp2 = matrixProduct_DAC(A, startrowA + offset, startcolA + offset, B, startrowB + offset, startcolB + offset, offset);
+			sumMatrix(C, temp1, temp2, offset, offset);
+		}
+		
+		return C;
+	}
+	
+	private static void sumMatrix(int[][] C, int[][] A, int[][] B,int row, int col)
+	{
+		for(int i = 0; i < A.length; i++)
+		{
+			for(int j = 0; j < A.length; j++)
+			{
+				C[i + row][j + col] = A[i][j] + B[i][j];
+			}
+		}
+
+	}
+
+>>>>>>> 554721c280d527be754490eec42e7f3f0a1f6df8
 	public static int[][] matrixProduct_Strassen(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		// checks to see if matrix is square and power of two
