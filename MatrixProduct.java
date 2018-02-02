@@ -83,7 +83,7 @@ public class MatrixProduct
 		
 		if(n == 1)
 		{
-			C[0][0] = A[]
+			C = matrixProduct_Strassen(A, startrowA, startcolA, B, startrowB, startcolB, n);
 		}
 		else
 		{
