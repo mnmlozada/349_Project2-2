@@ -38,6 +38,7 @@ public class MatrixProduct
         return matrixProduct_DAC(A, 0, 0, B, 0, 0, A.length);
 	}
 
+	// C11 - C22 need 2 recursive calls, then the 2 matrices resulting from the recursive calls need to be added
 	private static int[][] matrixProduct_DAC(int A[][], int startrowA, int startcolA, int B[][], int startrowB, int startcolB, int size)
 	{
         int[][] C = new int[size][size];
@@ -50,43 +51,44 @@ public class MatrixProduct
 		}
 		else{
 
-			int newSize= size/2;
+			int offset = size/2;
 			
 			//C11
-			temp1 = matrixProduct_DAC(A, startrowA, startcolA, B, startrowB, startcolB, newSize);
-			temp2 = matrixProduct_DAC(A, startrowA, startcolA+newSize, B, startrowB+ newSize, startcolB, newSize);
+			temp1 = matrixProduct_DAC(A, startrowA, startcolA, B, startrowB, startcolB, offset);
+			temp2 = matrixProduct_DAC(A, startrowA, startcolA + offset, B, startrowB + offset, startcolB, offset);
 			sumMatrix(C, temp1, temp2, 0, 0);
 
 			//C12
-			temp1 = matrixProduct_DAC(A, startrowA, startcolA, B, startrowB, startcolB + newSize, newSize);
-			temp2 = matrixProduct_DAC(A, startrowA, startcolA+newSize, B, startrowB+ newSize, startcolB+newSize, newSize);
-			sumMatrix(C, temp1, temp2, 0, newSize);
+			temp1 = matrixProduct_DAC(A, startrowA, startcolA, B, startrowB, startcolB + offset, offset);
+			temp2 = matrixProduct_DAC(A, startrowA, startcolA+offset, B, startrowB + offset, startcolB+offset, offset);
+			sumMatrix(C, temp1, temp2, 0, offset);
 
 			 
 			//C21
-			temp1 = matrixProduct_DAC(A, startrowA+ newSize, startcolA, B, startrowB, startcolB, newSize);
-			temp2 = matrixProduct_DAC(A, startrowA+ newSize, startcolA+newSize, B, startrowB+ newSize, startcolB, newSize);
-			sumMatrix(C, temp1, temp2, newSize, 0);
+			temp1 = matrixProduct_DAC(A, startrowA + offset, startcolA, B, startrowB, startcolB, offset);
+			temp2 = matrixProduct_DAC(A, startrowA + offset, startcolA + offset, B, startrowB+ offset, startcolB, offset);
+			sumMatrix(C, temp1, temp2, offset, 0);
 
 			//C22
-			temp1 = matrixProduct_DAC(A, startrowA+ newSize, startcolA, B, startrowB, startcolB+newSize, newSize);
-			temp2 = matrixProduct_DAC(A, startrowA+ newSize, startcolA+newSize, B, startrowB+ newSize, startcolB+newSize, newSize);
-			sumMatrix(C, temp1, temp2, newSize, newSize);
+			temp1 = matrixProduct_DAC(A, startrowA + offset, startcolA, B, startrowB, startcolB +offset, offset);
+			temp2 = matrixProduct_DAC(A, startrowA + offset, startcolA + offset, B, startrowB + offset, startcolB + offset, offset);
+			sumMatrix(C, temp1, temp2, offset, offset);
 		}
 		
 		return C;
 	}
 	
-	private static void sumMatrix(int[][] C, int[][]A, int[][]B,int rowC, int colC)
+	private static void sumMatrix(int[][] C, int[][] A, int[][] B,int row, int col)
 	{
-		int n=A.length;
-		
-		for(int i =0; i<n; i++){
-			for(int j=0; j<n; j++)  
-				C[i+rowC][j+colC]=A[i][j]+B[i][j];
-    }
+		for(int i = 0; i < A.length; i++)
+		{
+			for(int j = 0; j < A.length; j++)
+			{
+				C[i + row][j + col] = A[i][j] + B[i][j];
+			}
+		}
 
-}
+	}
 
 	public static int[][] matrixProduct_Strassen(int[][] A, int[][] B) throws IllegalArgumentException
 	{
