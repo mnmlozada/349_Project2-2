@@ -60,8 +60,7 @@ public class MatrixProduct
 	{
 
         int[][] C = new int[size][size];
-		int[][] temp1 = new int[size][size];
-		int[][] temp2 = new int[size][size];
+		int[][] temp1, temp2;
 
 		if(size == 1)
 		{
