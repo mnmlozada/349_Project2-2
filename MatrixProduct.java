@@ -34,10 +34,16 @@ public class MatrixProduct
 
 	public static int[][] matrixProduct_DAC(int[][] A, int[][] B) throws IllegalArgumentException
 	{
-		checkMatrix(A, B);
-        matrixProduct_DAC(A, 0, 0, B, 0, 0, A.length);
-		int[][] C = new int[1][1];
-		return C;
+		try
+		{
+			checkMatrix(A, B);
+		}
+		catch(IllegalArgumentException e)
+		{
+			throw new IllegalArgumentException("Invalid Matrices");
+		}
+		
+        return matrixProduct_DAC(A, 0, 0, B, 0, 0, A.length);
 	}
 
 	// C11 - C22 need 2 recursive calls, then the 2 matrices resulting from the recursive calls need to be added
