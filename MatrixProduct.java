@@ -190,19 +190,5 @@ public class MatrixProduct
 		}
 		return C;
 	}
-	
-	public static void main (String[] args) 
-    {
-        int row1 = 3, col1 = 3, row2 = 3, col2 = 3;
-        int A[][] = { {1, 2, 3},
-                      {4, 5, 6},
-                      {7, 8, 9}};
-  
-        int B[][] = { {1, 2, 3},
-                      {4, 5, 6},
-                      {7, 8, 9} };
-  
-        multiplyMatrix(row1, col1, A, row2, col2, B);
-    }
 
 }
