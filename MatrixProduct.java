@@ -35,16 +35,22 @@ public class MatrixProduct
 	public static int[][] matrixProduct_DAC(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		checkMatrix(A, B);
-        return matrixProduct_DAC(A, 0, 0, B, 0, 0, A.length);
+        matrixProduct_DAC(0, 0, A, 0, 0, B, A.length);
+		int[][] C = new int[1][1];
+		return C;
 	}
+
+
+	private static int[][] matrixProduct_DAC(int aRow, int aCol, int A[][], int bRow, int bCol, int B[][], int size)
+  {
 
 	// C11 - C22 need 2 recursive calls, then the 2 matrices resulting from the recursive calls need to be added
 	private static int[][] matrixProduct_DAC(int A[][], int startrowA, int startcolA, int B[][], int startrowB, int startcolB, int size)
 	{
+
         int[][] C = new int[size][size];
-		int[][] temp1 = new int[size][size];
-		int[][] temp2 = new int[size][size];
 		
+
 		if(size == 1)
 		{
 			C[0][0] = A[startrowA][startcolA] * B[startrowB][startcolB];
@@ -90,13 +96,22 @@ public class MatrixProduct
 
 	}
 
+
 	public static int[][] matrixProduct_Strassen(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		// checks to see if matrix is square and power of two
-		checkMatrix(A, B);
+		try
+		{
+			checkMatrix(A, B);
+		}
+		catch(IllegalArgumentException e)
+		{
+			throw new IllegalArgumentException("Invalid Matrices");
+		}
 
-		return matrixProduct_Strassen(A, 0, 0, B, 0, 0, A.length);
 
+		int [][] C = matrixProduct_Strassen(A, 0, 0, B, 0, 0, A.length);
+		return C;
 	}
 
 	private static int[][] matrixProduct_Strassen(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
@@ -105,7 +120,7 @@ public class MatrixProduct
 		
 		if(n == 1)
 		{
-			C = matrixProduct_Strassen(A, startrowA, startcolA, B, startrowB, startcolB, n);
+			C[0][0] = A[startrowA][startcolA] * B[startrowB][startcolB];
 		}
 		else
 		{
@@ -132,10 +147,10 @@ public class MatrixProduct
 
 			// Computing C quadrants
 			int[][] c11, c12, c21, c22;
-			c11 = matrixDiff( matrixAdd(p5, 0, 0, p4, 0, 0, n / 2), 0, 0, matrixAdd(p2, 0, 0, p6, 0, 0, n / 2), 0, 0, n / 2 );
+			c11 = matrixAdd(matrixDiff(matrixAdd(p5, 0, 0, p4, 0, 0, n / 2), 0, 0, p2, 0, 0, n / 2), 0, 0, p6, 0, 0, n / 2);
 			c12 = matrixAdd(p1, 0, 0, p2, 0, 0, n / 2);
 			c21 = matrixAdd(p3, 0, 0, p4, 0, 0, n / 2);
-			c22 = matrixDiff( matrixAdd(p5, 0, 0, p1, 0, 0, n / 2), 0, 0, matrixDiff(p3, 0, 0, p7, 0, 0, n / 2), 0, 0, n / 2 );
+			c22 = matrixDiff(matrixDiff(matrixAdd(p5, 0, 0, p1, 0, 0, n / 2), 0, 0, p3, 0, 0, n / 2), 0, 0, p7, 0, 0, n / 2);
 
 			fillMatrix(C, c11, c12, c21, c22, n);
 		}
@@ -155,29 +170,29 @@ public class MatrixProduct
 		}
 
 		// filling in c12
-		for(int i = n / 2; i < n; i++)
+		for(int i = 0; i < n / 2; i++)
 		{
 			for(int j = 0; j < n / 2; j++)
 			{
-				C[i][j] = c12[i][j];
+				C[i][j + n / 2] = c12[i][j];
 			}
 		}
 
 		// filling in c21
 		for(int i = 0; i < n / 2; i++)
 		{
-			for(int j = n / 2; j < n; j++)
+			for(int j = 0; j < n / 2; j++)
 			{
-				C[i][j] = c21[i][j];
+				C[i + n / 2][j] = c21[i][j];
 			}
 		}
 
 		// filling in c22
-		for(int i = n / 2; i < n; i++)
+		for(int i = 0; i < n / 2; i++)
 		{
-			for(int j = n / 2; j < n; j++)
+			for(int j = 0; j < n / 2; j++)
 			{
-				C[i][j] = c22[i][j];
+				C[i + n / 2][j + n / 2] = c22[i][j];
 			}
 		}
 
@@ -190,7 +205,7 @@ public class MatrixProduct
 
 		for(int i = 0; i < n; i++)
 		{
-			for(int j = 0; i < n; j++)
+			for(int j = 0; j < n; j++)
 			{
 				C[i][j] = A[startrowA + i][startcolA + j] + B[startrowB + i][startcolB + j];
 			}
@@ -205,7 +220,7 @@ public class MatrixProduct
 
 		for(int i = 0; i < n; i++)
 		{
-			for(int j = 0; i < n; j++)
+			for(int j = 0; j < n; j++)
 			{
 				C[i][j] = A[startrowA + i][startcolA + j] - B[startrowB + i][startcolB + j];
 			}
