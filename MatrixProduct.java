@@ -4,12 +4,14 @@ import java.io.*;
 public class MatrixProduct
 {
 
+	int aRow, aCol, bRow, bCol;
+	
 	private static void checkMatrix(int[][] A, int[][] B) throws IllegalArgumentException
 	{
-		int aRow = A.length;
-		int aCol = A[0].length;
-		int bRow = B.length;
-		int bCol = B[0].length;
+		aRow = A.length;
+		aCol = A[0].length;
+		bRow = B.length;
+		bCol = B[0].length;
 
 		//checks that each matrix is a square and that they equal each other
 		if(aRow != aCol && bRow != bCol && aCol != bRow)
@@ -35,36 +37,35 @@ public class MatrixProduct
 	public static int[][] matrixProduct_DAC(int[][] A, int[][] B)
 	{
 		checkMatrix(A, B);
-		// get row/col lengths
 		int[][] C = new int[100][100];
-        matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
+        matrixProduct_DAC(aRow, aCol, A, bRow, bCol, B, C);
 	}
 
-	private static void matrixProduct_DAC(int row1, int col1, int A[][], int row2, int col2, int B[][], int C[][])
+	private static void matrixProduct_DAC(int aRow, int aCol, int A[][], int bRow, int bCol, int B[][], int C[][])
   {
         // If all rows traversed
-        if (i >= row1)
+        if (i >= aRow)
             return;
 
-        // If i < row1
-        if (j < col2)
+        // If i < aRow
+        if (j < bCol)
         {
-            if (k < col1)
+            if (k < aCol)
             {
                 C[i][j] += A[i][k] * B[k][j];
                 k++;
 
-                matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
+                matrixProduct_DAC(aRow, aCol, A, bRow, bCol, B, C);
             }
 
             k = 0;
             j++;
-            matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
+            matrixProduct_DAC(aRow, aCol, A, bRow, bCol, B, C);
         }
 
         j = 0;
         i++;
-        matrixProduct_DAC(row1, col1, A, row2, col2, B, C);
+        matrixProduct_DAC(aRow, aCol, A, bRow, bCol, B, C);
     }
 
 	public static int[][] matrixProduct_Strassen(int[][] A, int[][] B) throws IllegalArgumentException
@@ -79,7 +80,8 @@ public class MatrixProduct
 	private static int[][] matrixProduct_Strassen(int[][] A, int startrowA, int startcolA, int[][] B, int startrowB, int startcolB, int n)
 	{
 		int[][] C = new int[n][n];
-		if n == 1
+		
+		if(n == 1)
 		{
 			C[0][0] = A[]
 		}
@@ -188,5 +190,19 @@ public class MatrixProduct
 		}
 		return C;
 	}
+	
+	public static void main (String[] args) 
+    {
+        int row1 = 3, col1 = 3, row2 = 3, col2 = 3;
+        int A[][] = { {1, 2, 3},
+                      {4, 5, 6},
+                      {7, 8, 9}};
+  
+        int B[][] = { {1, 2, 3},
+                      {4, 5, 6},
+                      {7, 8, 9} };
+  
+        multiplyMatrix(row1, col1, A, row2, col2, B);
+    }
 
 }
