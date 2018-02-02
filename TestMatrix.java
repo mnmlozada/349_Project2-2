@@ -10,6 +10,7 @@ public class TestMatrix
 		// result matrices
 		int[][] J = new int[2][2];
 		int[][] K = new int[4][4];
+		int[][] Q = new int[1][1];
 		
 		// invalid matrix, not square
 		int A[][] = { {1, 2, 3},
@@ -38,6 +39,8 @@ public class TestMatrix
                       {9, 10, 11, 12},
 					  {13, 14, 15, 16}};
 					  
+		int P[][] = { {5}};
+					  
 		// correct result
 		
 		// 2x2
@@ -51,7 +54,7 @@ public class TestMatrix
 					  {426, 484, 542, 600}};
 		
 		
-		//case 1
+		/*/case 1
 
 		try
 		{
@@ -64,7 +67,7 @@ public class TestMatrix
 		{
 			System.out.println("Caught");
 		}
-
+		*/
 		
 		
 		//case 2
@@ -91,6 +94,14 @@ public class TestMatrix
 		printMatrix(K);
 		System.out.println("Strassen Answer:");
 		printMatrix(N);
+		
+		// case 4
+		Q = test.matrixProduct_DAC(P, P);
+		System.out.println("DAC Results:");
+		printMatrix(Q);
+		Q = test.matrixProduct_Strassen(P, P);
+		System.out.println("Strassen Results:");
+		printMatrix(Q);
     }
 	
 	public static void printMatrix(int[][] A)
