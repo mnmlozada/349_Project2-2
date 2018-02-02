@@ -35,33 +35,65 @@ public class MatrixProduct
 	public static int[][] matrixProduct_DAC(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		checkMatrix(A, B);
-        matrixProduct_DAC(0, 0, A, 0, 0, B, A.length);
-		
-		return C;
+        return matrixProduct_DAC(A, 0, 0, B, 0, 0, A.length);
 	}
 
-	private static void matrixProduct_DAC(int aRow, int aCol, int A[][], int bRow, int bCol, int B[][], int size)
-  {
+	private static int[][] matrixProduct_DAC(int A[][], int startrowA, int startcolA, int B[][], int startrowB, int startcolB, int size)
+	{
         int[][] C = new int[size][size];
+		int[][] temp1 = new int[size][size];
+		int[][] temp2 = new int[size][size];
 		
 		if(size == 1)
 		{
-			C = A[aRow, aCol] * B[bRow][bCol];
+			C[0][0] = A[startrowA][startcolA] * B[startrowB][startcolB];
 		}
-		else
-		{
+		else{
+
+			int newSize= size/2;
 			
+			//C11
+			temp1 = matrixProduct_DAC(A, startrowA, startcolA, B, startrowB, startcolB, newSize);
+			temp2 = matrixProduct_DAC(A, startrowA, startcolA+newSize, B, startrowB+ newSize, startcolB, newSize);
+			sumMatrix(C, temp1, temp2, 0, 0);
+
+			//C12
+			temp1 = matrixProduct_DAC(A, startrowA, startcolA, B, startrowB, startcolB + newSize, newSize);
+			temp2 = matrixProduct_DAC(A, startrowA, startcolA+newSize, B, startrowB+ newSize, startcolB+newSize, newSize);
+			sumMatrix(C, temp1, temp2, 0, newSize);
+
+			 
+			//C21
+			temp1 = matrixProduct_DAC(A, startrowA+ newSize, startcolA, B, startrowB, startcolB, newSize);
+			temp2 = matrixProduct_DAC(A, startrowA+ newSize, startcolA+newSize, B, startrowB+ newSize, startcolB, newSize);
+			sumMatrix(C, temp1, temp2, newSize, 0);
+
+			//C22
+			temp1 = matrixProduct_DAC(A, startrowA+ newSize, startcolA, B, startrowB, startcolB+newSize, newSize);
+			temp2 = matrixProduct_DAC(A, startrowA+ newSize, startcolA+newSize, B, startrowB+ newSize, startcolB+newSize, newSize);
+			sumMatrix(C, temp1, temp2, newSize, newSize);
 		}
 		
 		return C;
+	}
+	
+	private static void sumMatrix(int[][] C, int[][]A, int[][]B,int rowC, int colC)
+	{
+		int n=A.length;
+		
+		for(int i =0; i<n; i++){
+			for(int j=0; j<n; j++)  
+				C[i+rowC][j+colC]=A[i][j]+B[i][j];
     }
+
+}
 
 	public static int[][] matrixProduct_Strassen(int[][] A, int[][] B) throws IllegalArgumentException
 	{
 		// checks to see if matrix is square and power of two
 		checkMatrix(A, B);
 
-		matrixProduct_Strassen(A, 0, 0, B, 0, 0, A.length);
+		return matrixProduct_Strassen(A, 0, 0, B, 0, 0, A.length);
 
 	}
 
